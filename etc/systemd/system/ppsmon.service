@@ -1,0 +1,12 @@
+[Unit]
+Description=Network Packet Rate Monitor
+After=network.target
+
+[Service]
+User=nobody
+Group=nogroup
+ExecStart=/usr/bin/ppsmon eth0
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target

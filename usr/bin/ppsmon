@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# Measure the difference in TX and RX packet count every second
+# Write the result to a file
+# Access the file at any time to get the current PPS rate
+#
+set -euo pipefail
+declare -r datadir="/dev/shm/ppsmon/"
+declare -r tx_pps_outfile="${datadir}/tx-pps"
+declare -r rx_pps_outfile="${datadir}/rx-pps"
+declare -r interface="$1"
+rm -rf "${datadir}" && mkdir "${datadir}"
+while [ 1 ]; do
+    txpkts_old=$(</sys/class/net/$interface/statistics/tx_packets)
+    rxpkts_old=$(</sys/class/net/$interface/statistics/rx_packets)
+    sleep 1
+    echo $(($(</sys/class/net/$interface/statistics/tx_packets) - txpkts_old)) > "${tx_pps_outfile}"
+    echo $(($(</sys/class/net/$interface/statistics/rx_packets) - rxpkts_old)) > "${rx_pps_outfile}"
+done

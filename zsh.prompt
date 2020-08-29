@@ -1,0 +1,11 @@
+# This is pretty ugly, it's just an example
+# - mzpqnxow@github
+#
+# Source this from your ~/.zshrc
+# Make sure you source it *after* any existing PS1/PROMPT modifications
+# or it will be overwritten
+#
+setopt PROMPT_SUBST
+PROMPT='%B%F{green}PPSMON: TX PPS=$(cat /dev/shm/ppsmon/tx-pps)    \
+RX PPS=$(cat /dev/shm/ppsmon/rx-pps)%b
+[%F{grey}%n@%m] %F{cyan}%~ %F{yellow}%(#.#.$) '

@@ -1,0 +1,24 @@
+# This is pretty ugly, it's just an example
+# - mzpqnxow@github
+#
+# Source this from your ~/.bashrc or ~/.bash_profile
+# Make sure you source it *after* any existing PS1/PROMPT modifications
+# or it will be overwritten
+#
+function proml
+{
+case $TERM in
+    xterm*)
+        local TITLEBAR='\[\033]0;TX:$(cat /dev/shm/ppsmon/tx-pps)pps RX:$(cat /dev/shm/ppsmon/rx-pps)pps \u@\h:\w\007\]'
+        ;;
+    *)
+        local TITLEBAR=''
+        ;;
+esac
+
+export PS1=${TITLEBAR}\
+'(Network Activity: $(cat /dev/shm/ppsmon/tx-pps) TX PPS, $(cat /dev/shm/ppsmon/rx-pps) RX PPS)
+\u@\h:\w
+\$ '
+}
+proml
