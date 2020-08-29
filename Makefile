@@ -21,7 +21,12 @@ $(SERVICE): $(PPSMON)
 	sudo systemctl daemon-reload
 	sudo systemctl start ppsmon	
 
-ohmyzsh: $(SERVICE)
+~/.oh-my-zsh:
+	@echo -n 'Press enter to install oh-my-zsh package from maintainer site ...'
+	@read ok
+	@sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+ohmyzsh: $(SERVICE) ~/.oh-my-zsh
 	install ppsmon.zsh-theme ~/.oh-my-zsh/themes/ -m 644
 	@echo 'Theme installed, please set ZSH_THEME="ppsmon" in ~/.zshrc'
 
